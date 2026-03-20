@@ -3,3 +3,8 @@ env.ps1
 /.quarto/
 github.ipynb
 build.sh
+
+# React SPA build artifacts
+web/node_modules/
+web/dist/
+web/public/projects.json
