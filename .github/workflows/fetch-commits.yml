@@ -1,0 +1,21 @@
+name: Fetch Last Commit Times
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'   # Every Monday 00:00 UTC
+  workflow_dispatch:        # Manual trigger
+
+permissions:
+  contents: write           # Required to commit and push
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Fetch last commit times
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/fetch_last_commits.sh
