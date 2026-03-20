@@ -34,10 +34,12 @@ Strip the repo down to only what matters: `site/projects.csv`, `README.md`, and 
 
 **Remove the `last_commit` column entirely.** Some rows currently have values in this column (e.g., `quantdsl: 2017-10-26`) — discard all of these values; going forward, last commit times are fetched automatically by the Scope 2 script.
 
-**Final authoritative column order (7 columns):**
+**Final authoritative column order (6 columns):**
 ```
-project, section, url, description, github, cran, repo
+project, section, url, description, github, cran
 ```
+
+The `repo` column is removed entirely — `owner/name` can always be derived from `url` by stripping `https://github.com/` for GitHub projects.
 
 The `github` and `cran` columns store the string values `'True'` or `'False'` (not JSON booleans). This must be preserved exactly as-is in the CSV.
 
@@ -99,7 +101,7 @@ Columns: `url, last_commit`
 
 - `url` matches the `url` column in `site/projects.csv` (the join key)
 - Only rows where `url` starts with `https://github.com/` are included
-- Projects with a non-GitHub `url` (e.g., numpy at numpy.org) are excluded — even if the `repo` column is populated, only the `url` column drives inclusion. These tools show no last commit in the SPA (blank cell).
+- Projects with a non-GitHub `url` (e.g., numpy at numpy.org) are excluded — only the `url` column drives inclusion. These tools show no last commit in the SPA (blank cell).
 - This file IS tracked in git. The Actions workflow commits and pushes it after each run.
 
 ### Script: `scripts/fetch_last_commits.sh`
@@ -232,7 +234,7 @@ const commitsCsv  = resolve(__dirname, '../../last_commit_times.csv');
 ```
 
 **`build-data.mjs` — merge logic:**
-1. Read `projectsCsv` (7 columns after Scope 3 cleanup)
+1. Read `projectsCsv` (6 columns after Scope 3 cleanup)
 2. Read `commitsCsv` — handle file-not-found gracefully (treat as empty map; log a warning)
 3. Build a `Map<url, last_commit>` from the commits CSV
 4. For each project row:
@@ -252,7 +254,6 @@ export interface Project {
   description: string;
   github: boolean;
   cran: boolean;
-  repo: string;
   last_commit: string | null;  // 'YYYY-MM-DD' or null
 }
 ```
@@ -264,7 +265,7 @@ export interface Project {
 | Name | Linked to `url`, opens in new tab |
 | Section | Plain text |
 | Description | Plain text, truncated with tooltip on overflow |
-| GitHub | Icon link (`https://github.com/${repo}`) shown only when `github === true`; blank cell otherwise |
+| GitHub | Icon link using `url` directly (which is already the GitHub URL) shown only when `github === true`; blank cell otherwise |
 | Last Commit | Formatted date (`YYYY-MM-DD`), sortable chronologically; blank cell when `null`. `null` values sort last in both ascending and descending order. |
 
 The `cran` column is **not displayed in the UI** — it is retained in the CSV and JSON for potential future use but has no visual representation in the table.
@@ -391,4 +392,4 @@ Deploy Action (deploy-spa.yml)
 - Authentication / user accounts
 - `cran` column UI representation (column retained in data, not shown in table)
 - Pagination (client-side filtering is sufficient for ~500 rows)
-- Fetching last commit for projects with a non-GitHub `url` (even if `repo` column is populated)
+- Fetching last commit for projects with a non-GitHub `url`
