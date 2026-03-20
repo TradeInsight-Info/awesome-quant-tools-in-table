@@ -164,21 +164,26 @@ export function ToolsTable({ data, search, selectedSections }: ToolsTableProps) 
     globalFilterFn,
   })
 
+  // Column widths — applied via th style, description gets remaining space automatically
+  const colWidths: Record<string, string | undefined> = {
+    project:     '160px',
+    section:     '190px',
+    description: undefined,   // auto — fills remaining space
+    github:      '56px',
+    last_commit: '108px',
+  }
+
   return (
     <div className="data-table-wrap">
       <table className="data-table">
-        <colgroup>
-          <col className="col-name" />
-          <col className="col-section" />
-          <col className="col-description" />
-          <col className="col-github" />
-          <col className="col-commit" />
-        </colgroup>
         <thead>
           {table.getHeaderGroups().map(hg => (
             <tr key={hg.id}>
               {hg.headers.map(header => (
-                <th key={header.id}>
+                <th
+                  key={header.id}
+                  style={colWidths[header.column.id] ? { width: colWidths[header.column.id] } : undefined}
+                >
                   {header.isPlaceholder ? null : (
                     typeof header.column.columnDef.header === 'function'
                       ? flexRender(header.column.columnDef.header, header.getContext())
@@ -194,7 +199,7 @@ export function ToolsTable({ data, search, selectedSections }: ToolsTableProps) 
             table.getRowModel().rows.map(row => (
               <tr key={row.id}>
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className={`cell-${cell.column.id}`}>
+                  <td key={cell.id} data-col={cell.column.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
