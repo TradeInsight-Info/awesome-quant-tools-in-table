@@ -1,0 +1,43 @@
+name: Deploy SPA
+
+on:
+  push:
+    branches: [master]
+    # Auto-commits from fetch-commits.yml contain [skip ci] which suppresses
+    # this push trigger. Those deploys are handled by the workflow_run trigger below.
+  workflow_run:
+    workflows: ["Fetch Last Commit Times"]
+    types: [completed]
+    # fires on any conclusion; the job-level 'if' below gates on success only
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'push' ||
+      github.event.workflow_run.conclusion == 'success'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: cd web && npm ci
+      - name: Build data (merge CSVs → projects.json)
+        run: node web/scripts/build-data.mjs
+      - name: Build SPA
+        run: cd web && npm run build
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+      - uses: actions/deploy-pages@v4
+        id: deployment
