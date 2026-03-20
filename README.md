@@ -1,5 +1,7 @@
 # Awesome Quant
 
+> **Browse the full interactive table:** [Awesome Quant Tools on GitHub Pages](https://TradeInsight-Info.github.io/awesome-quant-tools-in-table)
+
 A curated list of insanely awesome libraries, packages and resources for Quants (Quantitative Finance).
 
 [![](https://awesome.re/badge.svg)](https://awesome.re)
@@ -23,6 +25,7 @@ A curated list of insanely awesome libraries, packages and resources for Quants 
 - [Frameworks](#frameworks)
 - [Reproducing Works, Training & Books](#reproducing-works-training--books)
 
+<!-- PROJECT-LIST-START -->
 ## Python
 
 ### Numerical Libraries & Data Structures
@@ -632,6 +635,7 @@ date conversion, scaling factor values, and filtering by the specified date.
 - [AFML](https://github.com/boyboi86/AFML) - All the answers for exercises from Advances in Financial Machine Learning by Dr Marco Lopez de Parodo.
 - [AlgoTradingLib](https://github.com/usdaud/algotradinglib.github.io) - A catalog of algorithmic trading libraries, frameworks, strategies, and educational materials.
 Add Prop Trader Compass to Risk Management tools
+<!-- PROJECT-LIST-END -->
 
 ## Related Lists
 
