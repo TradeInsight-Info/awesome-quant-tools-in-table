@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { buttonVariants } from '@/components/ui/button'
 import {
   Popover,
   PopoverContent,
@@ -47,26 +46,26 @@ export function Filters({
     : `${selectedSections.length} selected`
 
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
       <Input
-        placeholder="Search by name or description..."
+        placeholder="Search instruments..."
         value={search}
         onChange={e => onSearchChange(e.target.value)}
-        className="max-w-sm"
+        className="search-input"
       />
 
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger
-          className={cn(buttonVariants({ variant: 'outline' }))}
+          className={cn('section-trigger', selectedSections.length > 0 && 'has-selection')}
           aria-label={label}
         >
           {label}
-          <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+          <ChevronDown />
         </PopoverTrigger>
-        <PopoverContent className="w-80 p-0" align="start">
+        <PopoverContent className="section-popover" style={{ width: '320px', padding: 0 }} align="start">
           <Command>
-            <CommandInput placeholder="Search sections..." />
-            <CommandList>
+            <CommandInput placeholder="Filter sections..." />
+            <CommandList style={{ maxHeight: '320px' }}>
               <CommandEmpty>No sections found.</CommandEmpty>
               <CommandGroup>
                 {sections.map(section => (
@@ -75,10 +74,14 @@ export function Filters({
                     onSelect={() => toggleSection(section)}
                   >
                     <Check
-                      className={cn(
-                        'mr-2 h-4 w-4',
-                        selectedSections.includes(section) ? 'opacity-100' : 'opacity-0'
-                      )}
+                      style={{
+                        marginRight: '8px',
+                        width: '12px',
+                        height: '12px',
+                        opacity: selectedSections.includes(section) ? 1 : 0,
+                        color: 'var(--text-gold)',
+                        flexShrink: 0,
+                      }}
                     />
                     {section}
                   </CommandItem>
@@ -88,6 +91,28 @@ export function Filters({
           </Command>
         </PopoverContent>
       </Popover>
+
+      {selectedSections.length > 0 && (
+        <button
+          onClick={() => onSectionsChange([])}
+          style={{
+            background: 'none',
+            border: 'none',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '10px',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: 'var(--text-secondary)',
+            cursor: 'pointer',
+            padding: '0 4px',
+            transition: 'color 0.15s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-primary)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
+        >
+          Clear
+        </button>
+      )}
     </div>
   )
 }
