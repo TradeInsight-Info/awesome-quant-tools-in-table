@@ -11,7 +11,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('/awesome-quant-tools-in-table/projects.json')
+    fetch('/projects.json')
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()
