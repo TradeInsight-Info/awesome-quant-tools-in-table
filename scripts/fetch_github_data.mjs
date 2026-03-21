@@ -5,7 +5,7 @@
  * Requires: GITHUB_TOKEN env var, Node.js 18+
  * Output: github_data.csv (url,last_commit,stars)
  */
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -13,6 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
 const CSV_PATH = resolve(ROOT, 'data/projects.csv')
 const OUTPUT_PATH = resolve(ROOT, 'data/github_data.csv')
+const NOT_FOUND_PATH = resolve(ROOT, 'data/404.csv')
 const BATCH_SIZE = 10
 const DELAY_MS = 2000
 
@@ -59,6 +60,10 @@ async function fetchRepoData(ownerRepo, url) {
       'User-Agent': 'awesome-quant-fetch',
     },
   })
+  if (res.status === 404) {
+    console.warn(`NOT FOUND (404): ${ownerRepo}`)
+    return { url, last_commit: '', stars: '', notFound: true }
+  }
   if (!res.ok) {
     console.warn(`WARN: ${res.status} for ${ownerRepo}`)
     return { url, last_commit: '', stars: '' }
@@ -82,11 +87,24 @@ async function main() {
   const githubProjects = projects.filter(p => p.url?.startsWith('https://github.com/'))
   console.log(`Found ${githubProjects.length} GitHub repos`)
 
-  const results = []
-  const totalBatches = Math.ceil(githubProjects.length / BATCH_SIZE)
+  // Load existing 404s to avoid re-fetching known dead repos
+  const existing404s = new Set(
+    existsSync(NOT_FOUND_PATH)
+      ? readFileSync(NOT_FOUND_PATH, 'utf-8').trim().split('\n').slice(1).map(l => l.replace(/"/g, '').trim())
+      : []
+  )
 
-  for (let i = 0; i < githubProjects.length; i += BATCH_SIZE) {
-    const batch = githubProjects.slice(i, i + BATCH_SIZE)
+  const toFetch = githubProjects.filter(p => !existing404s.has(p.url))
+  const skipped404 = githubProjects.length - toFetch.length
+  if (skipped404 > 0) console.log(`Skipping ${skipped404} known 404 repos`)
+  console.log(`Found ${toFetch.length} GitHub repos to fetch`)
+
+  const results = []
+  const newNotFound = []
+  const totalBatches = Math.ceil(toFetch.length / BATCH_SIZE)
+
+  for (let i = 0; i < toFetch.length; i += BATCH_SIZE) {
+    const batch = toFetch.slice(i, i + BATCH_SIZE)
     console.log(`Batch ${Math.floor(i / BATCH_SIZE) + 1}/${totalBatches}`)
     const batchResults = await Promise.all(
       batch.map(p => {
@@ -98,8 +116,14 @@ async function main() {
         return fetchRepoData(ownerRepo, p.url)
       })
     )
-    results.push(...batchResults)
-    if (i + BATCH_SIZE < githubProjects.length) await sleep(DELAY_MS)
+    for (const r of batchResults) {
+      if (r.notFound) {
+        newNotFound.push(r.url)
+      } else {
+        results.push(r)
+      }
+    }
+    if (i + BATCH_SIZE < toFetch.length) await sleep(DELAY_MS)
   }
 
   const csv = [
@@ -107,7 +131,15 @@ async function main() {
     ...results.map(r => `"${r.url}","${r.last_commit}","${r.stars}"`),
   ].join('\n') + '\n'
   writeFileSync(OUTPUT_PATH, csv, 'utf-8')
-  console.log(`Wrote ${results.length} entries to github_data.csv`)
+  console.log(`Wrote ${results.length} entries to data/github_data.csv`)
+
+  // Append new 404s (deduplicated with existing)
+  if (newNotFound.length > 0) {
+    const allNotFound = [...existing404s, ...newNotFound]
+    const notFoundCsv = ['url', ...allNotFound.map(u => `"${u}"`)].join('\n') + '\n'
+    writeFileSync(NOT_FOUND_PATH, notFoundCsv, 'utf-8')
+    console.log(`Recorded ${newNotFound.length} new 404s → data/404.csv (${allNotFound.length} total)`)
+  }
 }
 
 main().catch(err => { console.error(err); process.exit(1) })

@@ -15,6 +15,7 @@ function rel(...parts) {
 
 const PROJECTS_CSV    = rel('../../data/projects.csv')
 const GITHUB_DATA_CSV = rel('../../data/github_data.csv')
+const NOT_FOUND_CSV   = rel('../../data/404.csv')
 const OUTPUT_JSON     = rel('../public/projects.json')
 
 // --- Parse projects.csv ---
@@ -23,6 +24,18 @@ const { data: projects, errors: pErrors } = Papa.parse(projectsRaw, { header: tr
 if (pErrors.length) {
   console.error('projects.csv parse errors:', pErrors)
   process.exit(1)
+}
+
+// --- Load 404 blocklist (optional) ---
+let notFoundUrls = new Set()
+if (existsSync(NOT_FOUND_CSV)) {
+  const raw = readFileSync(NOT_FOUND_CSV, 'utf-8')
+  const lines = raw.trim().split('\n').slice(1) // skip header
+  for (const line of lines) {
+    const url = line.replace(/"/g, '').trim()
+    if (url) notFoundUrls.add(url)
+  }
+  console.log(`Loaded ${notFoundUrls.size} 404 URLs to exclude`)
 }
 
 // --- Parse github_data.csv (optional) ---
@@ -49,8 +62,8 @@ const KNOWN_LANGUAGES = new Set([
   'Haskell', 'Elixir/Erlang',
 ])
 
-// --- Merge ---
-const merged = projects.map(row => {
+// --- Merge (exclude 404 projects) ---
+const merged = projects.filter(row => !notFoundUrls.has(row.url?.trim())).map(row => {
   // Split section "Python > Numerical Libraries" into language + category
   const rawSection = row.section?.trim() ?? ''
   const gtIdx = rawSection.indexOf(' > ')
