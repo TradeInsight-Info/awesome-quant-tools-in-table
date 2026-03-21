@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Filters } from './components/Filters'
+import { ThemeToggle } from './components/ThemeToggle'
 import { ToolsTable } from './components/ToolsTable'
 import type { Project } from './types'
 
@@ -57,6 +58,7 @@ export default function App() {
             </svg>
             GitHub
           </a>
+          <ThemeToggle />
         </div>
       </header>
 

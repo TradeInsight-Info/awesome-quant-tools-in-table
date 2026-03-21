@@ -58,6 +58,48 @@
   color-scheme: dark;
 }
 
+/* ─── Light Theme Overrides ─────────────────────────────────── */
+html.light {
+  --bg-base:        #f8f7f4;
+  --bg-surface:     #f0ede8;
+  --bg-hover:       rgba(180, 130, 40, 0.06);
+  --bg-row-alt:     rgba(0, 0, 0, 0.02);
+
+  --border-subtle:  #e2ddd6;
+  --border-default: #d4cfc8;
+  --border-strong:  #c0bab2;
+
+  --text-primary:   #1a1814;
+  --text-secondary: #7a7060;
+  --text-dim:       #bdb9b2;
+  --text-gold:      #9a6e1a;
+  --text-teal:      #1a8a5a;
+  --text-link:      #2a6aaa;
+
+  /* Shadcn/ui variable overrides — light theme */
+  --background:           #f8f7f4;
+  --foreground:           #1a1814;
+  --card:                 #f0ede8;
+  --card-foreground:      #1a1814;
+  --popover:              #edeae4;
+  --popover-foreground:   #1a1814;
+  --primary:              #9a6e1a;
+  --primary-foreground:   #f8f7f4;
+  --secondary:            #e2ddd6;
+  --secondary-foreground: #1a1814;
+  --muted:                #edeae4;
+  --muted-foreground:     #7a7060;
+  --accent:               #e2ddd6;
+  --accent-foreground:    #1a1814;
+  --border:               #d4cfc8;
+  --input:                #d4cfc8;
+  --ring:                 #9a6e1a;
+
+  color-scheme: light;
+}
+
+html.light body { background: var(--bg-base); }
+
 @theme inline {
   --font-sans: 'Geist Variable', system-ui, sans-serif;
   --color-background:           var(--background);
