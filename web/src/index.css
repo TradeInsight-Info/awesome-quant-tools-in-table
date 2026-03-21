@@ -340,10 +340,12 @@ body { margin: 0; background: var(--bg-base); }
 }
 
 /* Column-specific alignment */
-.data-table td[data-col="github"]      { text-align: center; padding-right: 8px; }
+.data-table td[data-col="github"]      { text-align: center; }
+.data-table td[data-col="stars"]       { text-align: right; }
 .data-table td[data-col="last_commit"] { text-align: right; }
-.data-table th:last-child .th-sort-btn { justify-content: flex-end; }
-.data-table th:nth-last-child(2) .th-label { padding-right: 8px; }
+.data-table th:last-child .th-sort-btn  { justify-content: flex-end; }
+.data-table th:nth-last-child(2) .th-sort-btn { justify-content: flex-end; }
+.data-table th:nth-last-child(3) .th-label { padding-right: 8px; }
 
 /* Header */
 .data-table thead tr {

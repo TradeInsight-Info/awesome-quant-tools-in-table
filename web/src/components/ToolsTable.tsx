@@ -135,11 +135,36 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
             >
               <GithubIcon />
             </a>
-            {info.row.original.stars !== null && (
-              <span className="github-stars">{formatStars(info.row.original.stars)}</span>
-            )}
           </div>
         ) : null,
+    }),
+    columnHelper.accessor(row => row.stars ?? undefined, {
+      id: 'stars',
+      header: ({ column }) => (
+        <button
+          className={`th-sort-btn${column.getIsSorted() ? ' is-sorted' : ''}`}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          aria-label="Stars"
+        >
+          Stars
+          {column.getIsSorted() === 'asc' ? (
+            <ArrowUp />
+          ) : column.getIsSorted() === 'desc' ? (
+            <ArrowDown />
+          ) : (
+            <ArrowUpDown />
+          )}
+        </button>
+      ),
+      sortUndefined: 'last',
+      cell: info => {
+        const val = info.getValue()
+        return (
+          <span className={`cell-commit${val != null ? ' has-date' : ''}`}>
+            {val != null ? formatStars(val) : ''}
+          </span>
+        )
+      },
     }),
     columnHelper.accessor(row => row.last_commit ?? undefined, {
       id: 'last_commit',
@@ -187,7 +212,8 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
     project:     '160px',
     category:    '190px',
     description: undefined,   // auto — fills remaining space
-    github:      '80px',    // was 56px — wider to fit stars
+    github:      '56px',
+    stars:       '80px',
     last_commit: '108px',
   }
 
