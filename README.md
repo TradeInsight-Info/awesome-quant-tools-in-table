@@ -27,9 +27,9 @@ A curated list of insanely awesome libraries, packages and resources for Quants 
 
 ## Contributing
 
-To add a tool, edit `projects.csv` and open a PR:
+To add a tool, edit `data/projects.csv` and open a PR:
 
-1. Append a new row at the **bottom** of `projects.csv` (order doesn't matter)
+1. Append a new row at the **bottom** of `data/projects.csv` (order doesn't matter)
 2. CI will automatically validate the CSV format
 
 ### Column Reference

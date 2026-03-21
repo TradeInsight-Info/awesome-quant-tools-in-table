@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
-const CSV_PATH = resolve(ROOT, 'projects.csv')
+const CSV_PATH = resolve(ROOT, 'data/projects.csv')
 const README_PATH = resolve(ROOT, 'README.md')
 const START_MARKER = '<!-- TOOLS-START -->'
 const END_MARKER = '<!-- TOOLS-END -->'

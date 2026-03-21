@@ -11,8 +11,8 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
-const CSV_PATH = resolve(ROOT, 'projects.csv')
-const OUTPUT_PATH = resolve(ROOT, 'github_data.csv')
+const CSV_PATH = resolve(ROOT, 'data/projects.csv')
+const OUTPUT_PATH = resolve(ROOT, 'data/github_data.csv')
 const BATCH_SIZE = 10
 const DELAY_MS = 2000
 

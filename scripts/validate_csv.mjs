@@ -8,7 +8,7 @@ import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const CSV_PATH = resolve(__dirname, '../projects.csv')
+const CSV_PATH = resolve(__dirname, '../data/projects.csv')
 
 const REQUIRED_HEADERS = ['project', 'section', 'url', 'description', 'github', 'cran']
 const BOOL_VALUES = new Set(['True', 'False', ''])

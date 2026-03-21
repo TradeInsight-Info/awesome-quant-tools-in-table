@@ -1,5 +1,5 @@
 project,section,url,description,github,cran
-numpy,Python > Numerical Libraries & Data Structures,https://www.numpy.org,NumPy is the fundamental package for scientific computing with Python.,False,False
+numpy,Python > Numerical Libraries & Data Structures,https://www.numpy.org,NumPy is the fundamental package for scientific computing with Python.,https://github.com/numpy/numpy,False
 scipy,Python > Numerical Libraries & Data Structures,https://www.scipy.org,"SciPy (pronounced “Sigh Pie”) is a Python-based ecosystem of open-source software for mathematics, science, and engineering.",False,False
 pandas,Python > Numerical Libraries & Data Structures,https://pandas.pydata.org,"pandas is an open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language.",False,False
 polars,Python > Numerical Libraries & Data Structures,https://docs.pola.rs/,Polars is a blazingly fast DataFrame library for manipulating structured data.,False,False
@@ -60,7 +60,7 @@ pybacktest,Python > Trading & Backtesting,https://github.com/ematvey/pybacktest,
 pyalgotrade,Python > Trading & Backtesting,https://github.com/gbeced/pyalgotrade,Python Algorithmic Trading Library.,True,False
 basana,Python > Trading & Backtesting,https://github.com/gbeced/basana,"A Python async and event driven framework for algorithmic trading, with a focus on crypto currencies.",True,False
 tradingWithPython,Python > Trading & Backtesting,https://pypi.org/project/tradingWithPython/,A collection of functions and classes for Quantitative trading.,False,False
-Pandas TA,Python > Trading & Backtesting,https://github.com/twopirllc/pandas-ta,Pandas TA is an easy to use Python 3 Pandas Extension with 115+ Indicators. Easily build Custom Strategies.,True,False
+Pandas TA (Not Open Source Anymore),Python > Trading & Backtesting,https://www.pandas-ta.dev/,Pandas TA is an easy to use Python 3 Pandas Extension with 115+ Indicators. Easily build Custom Strategies.,True,False
 ta,Python > Trading & Backtesting,https://github.com/bukosabino/ta,Technical Analysis Library using Pandas (Python),True,False
 algobroker,Python > Trading & Backtesting,https://github.com/joequant/algobroker,This is an execution engine for algo trading.,True,False
 pysentosa,Python > Trading & Backtesting,https://pypi.org/project/pysentosa/,Python API for sentosa trading system.,False,False
@@ -351,7 +351,7 @@ finance.js,JavaScript,https://github.com/ebradyjobory/finance.js,A JavaScript li
 portfolio-allocation,JavaScript,https://github.com/lequant40/portfolio_allocation_js,"PortfolioAllocation is a JavaScript library designed to help constructing financial portfolios made of several assets: bonds, commodities, cryptocurrencies, currencies, exchange traded funds (ETFs), mutual funds, stocks...",True,False
 Ghostfolio,JavaScript,https://github.com/ghostfolio/ghostfolio,"Wealth management software to keep track of financial assets like stocks, ETFs or cryptocurrencies and make solid, data-driven investment decisions.",True,False
 IndicatorTS,JavaScript,https://github.com/cinar/indicatorts,"Indicator is a TypeScript module providing various stock technical analysis indicators, strategies, and a backtest framework for trading.",True,False
-chart-patterns,JavaScript,https://github.com/focus1691/chart-patterns,"Technical analysis library for Market Profile, Volume Profile, Stacked Imbalances and High Volume Node indicators.",True,False
+chart-patterns (Discontinued),JavaScript,,"Technical analysis library for Market Profile, Volume Profile, Stacked Imbalances and High Volume Node indicators.",True,False
 orderflow,JavaScript,https://github.com/focus1691/orderflow,Orderflow trade aggregator for building Footprint Candles from exchange websocket data.,True,False
 ccxt,JavaScript,https://github.com/ccxt/ccxt,A JavaScript / Python / PHP cryptocurrency trading API with support for more than 100 bitcoin/altcoin exchanges.,True,False
 PENDAX,JavaScript,https://github.com/CompendiumFi/PENDAX-SDK,"Javascript SDK for Trading/Data API and Websockets for FTX, FTXUS, OKX, Bybit, & More.",True,False
@@ -366,7 +366,8 @@ Tai,Elixir/Erlang,https://github.com/fremantle-capital/tai,"Open Source composab
 Workbench,Elixir/Erlang,https://github.com/fremantle-industries/workbench,From Idea to Execution - Manage your trading operation across a globally distributed cluster,True,False
 Prop,Elixir/Erlang,https://github.com/fremantle-industries/prop,"An open and opinionated trading platform using productive & familiar open source libraries and tools for strategy research, execution and operation.",True,False
 Kelp,Golang,https://github.com/stellar/kelp,Kelp is an open-source Golang algorithmic cryptocurrency trading bot that runs on centralized exchanges and Stellar DEX (command-line usage and desktop GUI).,True,False
-marketstore,Golang,https://github.com/alpacahq/marketstore,DataFrame Server for Financial Timeseries Data.,True,False
+marketstore(Discontinued),Golang,,DataFrame Server for Financial Timeseries Data.,True,False
+pymarketstore,Python,https://github.com/alpacahq/pymarketstore,DataFrame Server for Financial Timeseries Data.,True,False
 IndicatorGo,Golang,https://github.com/cinar/indicator,"IndicatorGo is a Golang module providing various stock technical analysis indicators, strategies, and a backtest framework for trading.",True,False
 QuantLib,CPP,https://github.com/lballabio/QuantLib,The QuantLib project is aimed at providing a comprehensive software framework for quantitative finance.,True,False
 QuantLibRisks,CPP,https://github.com/auto-differentiation/QuantLib-Risks-Cpp,Fast risks with QuantLib in C++,True,False
@@ -437,7 +438,6 @@ financialnoob-misc,"Reproducing Works, Training & Books",https://github.com/fina
 MesoSim Options Trading Strategy Library,"Reproducing Works, Training & Books",https://github.com/deltaray-io/strategy-library,Free and public Options Trading strategy library for MesoSim. ,True,False
 Quant-Finance-With-Python-Code,"Reproducing Works, Training & Books",https://github.com/lingyixu/Quant-Finance-With-Python-Code,Repo for code examples in Quantitative Finance with Python by Chris Kelliher,True,False
 QuantFinanceTraining,"Reproducing Works, Training & Books",https://github.com/JoaoJungblut/QuantFinanceTraining,"This repository contains codes that were executed during my training in the CQF (Certificate in Quantitative Finance). The codes are organized by class, facilitating navigation and reference.",True,False
-Statistical-Learning-based-Portfolio-Optimization,"Reproducing Works, Training & Books",https://github.com/YannickKae/Statistical-Learning-based-Portfolio-Optimization,"This R Shiny App utilizes the Hierarchical Equal Risk Contribution (HERC) approach, a modern portfolio optimization method developed by Raffinot (2018).",True,False
 book_irds3,"Reproducing Works, Training & Books",https://github.com/attack68/book_irds3,Code repository for Pricing and Trading Interest Rate Derivatives.,True,False
 Autoencoder-Asset-Pricing-Models,"Reproducing Works, Training & Books",https://github.com/RichardS0268/Autoencoder-Asset-Pricing-Models,"Reimplementation of Autoencoder Asset Pricing Models ([GKX, 2019](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3335536)).",True,False
 Finance,"Reproducing Works, Training & Books",https://github.com/shashankvemuri/Finance,"150+ quantitative finance Python programs to help you gather, manipulate, and analyze stock market data.",True,False
