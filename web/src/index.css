@@ -237,6 +237,18 @@ body { margin: 0; background: var(--bg-base); }
 }
 .meta-link svg { width: 14px; height: 14px; }
 .meta-link:hover { color: var(--text-primary); }
+.meta-link.suggest-link {
+  padding: 5px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  color: var(--text-link);
+  font-weight: 500;
+}
+.meta-link.suggest-link:hover {
+  background: var(--bg-hover);
+  color: var(--text-link);
+}
 
 /* ─── Filter Bar ─────────────────────────────────────────────── */
 .filter-bar {

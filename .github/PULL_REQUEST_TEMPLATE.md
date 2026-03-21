@@ -1,9 +1,15 @@
 ## Adding a New Tool
 
-Please fill in all fields below when adding a new row to `projects.csv`.
+To contribute, fork this repo and add a new row to the bottom of `projects.csv`, then open this PR.
 
-- **Name:**
-- **Description:**
-- **Section:** (e.g. `Python > Financial Instruments and Pricing`)
-- **Site URL:**
-- **GitHub Link:** (if applicable, full URL e.g. `https://github.com/owner/repo`)
+**Checklist:**
+
+- [ ] Forked this repo and created a branch
+- [ ] Appended a new row at the **bottom** of `projects.csv` (order doesn't matter)
+- [ ] Filled in the `project` column — tool name
+- [ ] Filled in the `section` column — use `Language > Category` format (e.g. `Python > Backtesting`), just a language name (e.g. `Julia`), or just a category if language doesn't apply
+- [ ] Filled in the `url` column — full URL including `https://`
+- [ ] Filled in the `description` column — one concise sentence describing the tool
+- [ ] Set `github` to `True` if the URL is a GitHub repo, `False` otherwise
+- [ ] Set `cran` to `True` if it is a CRAN package, `False` otherwise
+- [ ] Verified the CSV row is correctly formatted (wrap values containing commas in double quotes)

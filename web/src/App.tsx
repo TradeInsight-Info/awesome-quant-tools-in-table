@@ -57,6 +57,14 @@ export default function App() {
         </div>
         <div className="header-right">
           <a
+            href="https://github.com/TradeInsight-Info/awesome-quant-tools-in-table/issues/new?template=add-tool.md&title=Add+tool%3A+%5Btool+name%5D"
+            className="meta-link suggest-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            + Suggest a tool
+          </a>
+          <a
             href="https://github.com/TradeInsight-Info/awesome-quant-tools-in-table"
             className="meta-link"
             target="_blank"

@@ -42,6 +42,7 @@ const LANG_COLORS: Record<string, { bg: string; text: string; border: string }> 
   'Julia':      { bg: 'rgba(168,85,247,0.1)',  text: '#7C3AED', border: 'transparent' },
   'CPP':        { bg: 'rgba(245,158,11,0.1)',  text: '#B45309', border: 'transparent' },
   'Csharp':     { bg: 'rgba(245,158,11,0.1)',  text: '#B45309', border: 'transparent' },
+  'CSharp':     { bg: 'rgba(245,158,11,0.1)',  text: '#B45309', border: 'transparent' },
   'Javascript': { bg: 'rgba(234,179,8,0.12)',  text: '#854D0E', border: 'transparent' },
   'Java':       { bg: 'rgba(239,68,68,0.1)',   text: '#B91C1C', border: 'transparent' },
   'Matlab':     { bg: 'rgba(232,121,249,0.1)', text: '#7E22CE', border: 'transparent' },
@@ -65,7 +66,7 @@ function GithubIcon() {
 }
 
 export function ToolsTable({ data, search, selectedLanguages, selectedCategories }: ToolsTableProps) {
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([{ id: 'project', desc: false }])
 
   const filtered = useMemo(() => {
     let result = data
@@ -212,7 +213,7 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
     project:     '160px',
     category:    '190px',
     description: undefined,   // auto — fills remaining space
-    github:      '56px',
+    github:      '80px',
     stars:       '80px',
     last_commit: '108px',
   }
