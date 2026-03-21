@@ -83,6 +83,13 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
   }, [data, selectedLanguages, selectedCategories])
 
   const columns = useMemo(() => [
+    columnHelper.display({
+      id: 'row_number',
+      header: '#',
+      cell: info => (
+        <span className="cell-row-number">{info.row.index + 1}</span>
+      ),
+    }),
     columnHelper.accessor('project', {
       header: ({ column }) => (
         <button
@@ -230,6 +237,7 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
 
   // Column widths — applied via th style, description gets remaining space automatically
   const colWidths: Record<string, string | undefined> = {
+    row_number:  '44px',
     project:     '160px',
     category:    '190px',
     description: undefined,   // auto — fills remaining space
