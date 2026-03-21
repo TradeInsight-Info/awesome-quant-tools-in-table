@@ -37,21 +37,22 @@ const globalFilterFn: FilterFn<Project> = (row, _columnId, filterValue: string) 
 
 // Language → badge color mapping
 const LANG_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  'Python':     { bg: 'rgba(59,130,246,0.08)',  text: '#6299d4', border: 'rgba(59,130,246,0.2)'  },
-  'R':          { bg: 'rgba(34,197,94,0.08)',   text: '#4db876', border: 'rgba(34,197,94,0.2)'   },
-  'Julia':      { bg: 'rgba(168,85,247,0.08)',  text: '#a06ed4', border: 'rgba(168,85,247,0.2)'  },
-  'C++':        { bg: 'rgba(245,158,11,0.08)',  text: '#c4962e', border: 'rgba(245,158,11,0.2)'  },
-  'JavaScript': { bg: 'rgba(234,179,8,0.08)',   text: '#b89a1a', border: 'rgba(234,179,8,0.2)'   },
-  'TypeScript': { bg: 'rgba(96,165,250,0.08)',  text: '#5d94d4', border: 'rgba(96,165,250,0.2)'  },
-  'Java':       { bg: 'rgba(239,68,68,0.08)',   text: '#c45858', border: 'rgba(239,68,68,0.2)'   },
-  'Go':         { bg: 'rgba(6,182,212,0.08)',   text: '#3aaecc', border: 'rgba(6,182,212,0.2)'   },
-  'Rust':       { bg: 'rgba(249,115,22,0.08)',  text: '#c47040', border: 'rgba(249,115,22,0.2)'  },
-  'MATLAB':     { bg: 'rgba(232,121,249,0.08)', text: '#b870c8', border: 'rgba(232,121,249,0.2)' },
-  'Scala':      { bg: 'rgba(244,63,94,0.08)',   text: '#c45068', border: 'rgba(244,63,94,0.2)'   },
+  'Python':     { bg: 'rgba(59,130,246,0.1)',  text: '#1D4ED8', border: 'transparent' },
+  'R':          { bg: 'rgba(34,197,94,0.1)',   text: '#15803D', border: 'transparent' },
+  'Julia':      { bg: 'rgba(168,85,247,0.1)',  text: '#7C3AED', border: 'transparent' },
+  'CPP':        { bg: 'rgba(245,158,11,0.1)',  text: '#B45309', border: 'transparent' },
+  'Csharp':     { bg: 'rgba(245,158,11,0.1)',  text: '#B45309', border: 'transparent' },
+  'Javascript': { bg: 'rgba(234,179,8,0.12)',  text: '#854D0E', border: 'transparent' },
+  'Java':       { bg: 'rgba(239,68,68,0.1)',   text: '#B91C1C', border: 'transparent' },
+  'Matlab':     { bg: 'rgba(232,121,249,0.1)', text: '#7E22CE', border: 'transparent' },
+  'Golang':     { bg: 'rgba(6,182,212,0.1)',   text: '#0E7490', border: 'transparent' },
+  'Rust':       { bg: 'rgba(249,115,22,0.1)',  text: '#C2410C', border: 'transparent' },
+  'Scala':      { bg: 'rgba(244,63,94,0.1)',   text: '#BE123C', border: 'transparent' },
+  'Ruby':       { bg: 'rgba(239,68,68,0.1)',   text: '#991B1B', border: 'transparent' },
 }
 
 function getLangStyle(language: string) {
-  return LANG_COLORS[language] ?? { bg: 'rgba(100,100,120,0.08)', text: '#5a6080', border: 'rgba(100,100,120,0.2)' }
+  return LANG_COLORS[language] ?? { bg: 'rgba(100,100,120,0.08)', text: '#6B7280', border: 'transparent' }
 }
 
 // GitHub SVG icon (inline, no external dep)

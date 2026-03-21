@@ -2,25 +2,25 @@ import { useState, useEffect } from 'react'
 import { Sun, Moon } from 'lucide-react'
 
 export function ThemeToggle() {
-  const [isLight, setIsLight] = useState(() => {
+  const [isDark, setIsDark] = useState(() => {
     if (typeof window === 'undefined') return false
-    return localStorage.getItem('theme') === 'light'
+    return localStorage.getItem('theme') === 'dark'
   })
 
   useEffect(() => {
-    if (isLight) {
-      document.documentElement.classList.add('light')
-      localStorage.setItem('theme', 'light')
-    } else {
-      document.documentElement.classList.remove('light')
+    if (isDark) {
+      document.documentElement.classList.add('dark')
       localStorage.setItem('theme', 'dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
     }
-  }, [isLight])
+  }, [isDark])
 
   return (
     <button
-      onClick={() => setIsLight(v => !v)}
-      aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+      onClick={() => setIsDark(v => !v)}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       style={{
         background: 'none',
         border: '1px solid var(--border-default)',
@@ -36,15 +36,15 @@ export function ThemeToggle() {
         flexShrink: 0,
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.color = 'var(--text-gold)'
-        e.currentTarget.style.borderColor = 'rgba(211, 167, 75, 0.3)'
+        e.currentTarget.style.color = 'var(--text-primary)'
+        e.currentTarget.style.borderColor = 'var(--border-strong)'
       }}
       onMouseLeave={e => {
         e.currentTarget.style.color = 'var(--text-secondary)'
         e.currentTarget.style.borderColor = 'var(--border-default)'
       }}
     >
-      {isLight ? <Moon size={14} /> : <Sun size={14} />}
+      {isDark ? <Sun size={14} /> : <Moon size={14} />}
     </button>
   )
 }

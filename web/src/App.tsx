@@ -40,18 +40,20 @@ export default function App() {
   return (
     <div className="app-shell">
       <header className="app-header">
-        <div className="header-eyebrow">
-          <span className="eyebrow-badge">Curated</span>
-          <span className="eyebrow-divider">·</span>
-          <span className="eyebrow-stat">{projects.length} instruments</span>
+        <div className="header-left">
+          <div className="header-eyebrow">
+            <span className="eyebrow-badge">Curated</span>
+            <span className="eyebrow-divider">·</span>
+            <span className="eyebrow-stat">{projects.length} tools indexed</span>
+          </div>
+          <h1 className="app-title">
+            Awesome <span>Quant</span>
+          </h1>
+          <p className="app-subtitle">
+            A searchable index of quantitative finance tools, libraries &amp; resources
+          </p>
         </div>
-        <h1 className="app-title">
-          Awesome <span>Quant</span>
-        </h1>
-        <p className="app-subtitle">
-          A precision index of quantitative finance tools, libraries &amp; resources
-        </p>
-        <div className="header-meta">
+        <div className="header-right">
           <a
             href="https://github.com/TradeInsight-Info/awesome-quant-tools-in-table"
             className="meta-link"
