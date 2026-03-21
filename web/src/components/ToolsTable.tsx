@@ -83,13 +83,6 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
   }, [data, selectedLanguages, selectedCategories])
 
   const columns = useMemo(() => [
-    columnHelper.display({
-      id: 'row_number',
-      header: '#',
-      cell: info => (
-        <span className="cell-row-number">{info.row.index + 1}</span>
-      ),
-    }),
     columnHelper.accessor('project', {
       header: ({ column }) => (
         <button
@@ -237,7 +230,6 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
 
   // Column widths — applied via th style, description gets remaining space automatically
   const colWidths: Record<string, string | undefined> = {
-    row_number:  '44px',
     project:     '160px',
     category:    '190px',
     description: undefined,   // auto — fills remaining space
@@ -252,6 +244,9 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
         <thead>
           {table.getHeaderGroups().map(hg => (
             <tr key={hg.id}>
+              <th style={{ width: '44px' }}>
+                <span className="th-label" style={{ textAlign: 'right', paddingRight: '12px' }}>#</span>
+              </th>
               {hg.headers.map(header => (
                 <th
                   key={header.id}
@@ -269,8 +264,11 @@ export function ToolsTable({ data, search, selectedLanguages, selectedCategories
         </thead>
         <tbody>
           {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map(row => (
+            table.getRowModel().rows.map((row, rowIndex) => (
               <tr key={row.id}>
+                <td data-col="row_number">
+                  <span className="cell-row-number">{rowIndex + 1}</span>
+                </td>
                 {row.getVisibleCells().map(cell => (
                   <td key={cell.id} data-col={cell.column.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

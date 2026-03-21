@@ -353,7 +353,6 @@ body { margin: 0; background: var(--bg-base); }
 
 /* Column-specific alignment */
 .data-table td[data-col="row_number"]  { text-align: right; }
-.data-table th:first-child .th-label   { text-align: right; padding-right: 12px; }
 .data-table td[data-col="github"]      { text-align: center; }
 .data-table td[data-col="stars"]       { text-align: right; }
 .data-table td[data-col="last_commit"] { text-align: right; }
