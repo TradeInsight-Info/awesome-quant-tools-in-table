@@ -25,6 +25,29 @@ A curated list of insanely awesome libraries, packages and resources for Quants 
 - [Frameworks](#frameworks)
 - [Reproducing Works, Training & Books](#reproducing-works-training--books)
 
+## Contributing
+
+To add a tool, edit `projects.csv` and open a PR:
+
+1. Append a new row at the **bottom** of `projects.csv` (order doesn't matter)
+2. CI will automatically validate the CSV format
+
+### Column Reference
+
+| Column | Required | Format | Example |
+|--------|----------|--------|---------|
+| `project` | Yes | Plain text | `pandas` |
+| `section` | No | `Language > Subcategory` | `Python > Data Analysis` |
+| `url` | Yes | Full URL with `https://` | `https://pandas.pydata.org` |
+| `description` | No | Plain text (quote if contains commas) | `"Fast, powerful data analysis"` |
+| `github` | No | `True` or `False` | `True` |
+| `cran` | No | `True` or `False` | `False` |
+
+**Example row to append:**
+```csv
+mylib,Python > Data Analysis,https://github.com/user/mylib,A great library,True,False
+```
+
 <!-- TOOLS-START -->
 
 ## JavaScript
