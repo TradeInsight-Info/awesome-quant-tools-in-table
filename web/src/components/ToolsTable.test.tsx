@@ -14,6 +14,7 @@ const projects: Project[] = [
     github: true,
     cran: false,
     last_commit: '2025-12-30',
+    stars: null,
   },
   {
     project: 'numpy',
@@ -24,6 +25,7 @@ const projects: Project[] = [
     github: false,
     cran: false,
     last_commit: null,
+    stars: null,
   },
 ]
 

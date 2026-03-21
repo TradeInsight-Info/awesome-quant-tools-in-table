@@ -21,11 +21,11 @@ jobs:
       - name: Fetch last commit times
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/fetch_last_commits.mjs
+        run: node scripts/fetch_github_data.mjs
       - name: Commit and push updated commit times
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add last_commit_times.csv
+          git add github_data.csv
           git diff --staged --quiet || git commit -m "chore: update last commit times"
           git push

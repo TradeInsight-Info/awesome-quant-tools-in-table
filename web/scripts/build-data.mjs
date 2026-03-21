@@ -13,9 +13,9 @@ function rel(...parts) {
   return resolve(__dirname, ...parts)
 }
 
-const PROJECTS_CSV  = rel('../../projects.csv')
-const COMMITS_CSV   = rel('../../last_commit_times.csv')
-const OUTPUT_JSON   = rel('../public/projects.json')
+const PROJECTS_CSV    = rel('../../projects.csv')
+const GITHUB_DATA_CSV = rel('../../github_data.csv')
+const OUTPUT_JSON     = rel('../public/projects.json')
 
 // --- Parse projects.csv ---
 const projectsRaw = readFileSync(PROJECTS_CSV, 'utf-8')
@@ -25,19 +25,22 @@ if (pErrors.length) {
   process.exit(1)
 }
 
-// --- Parse last_commit_times.csv (optional) ---
-let commitMap = new Map()
-if (existsSync(COMMITS_CSV)) {
-  const commitsRaw = readFileSync(COMMITS_CSV, 'utf-8')
-  const { data: commits } = Papa.parse(commitsRaw, { header: true, skipEmptyLines: true })
-  for (const row of commits) {
-    if (row.url && row.last_commit) {
-      commitMap.set(row.url.trim(), row.last_commit.trim())
+// --- Parse github_data.csv (optional) ---
+let commitMap = new Map()   // url -> { last_commit, stars }
+if (existsSync(GITHUB_DATA_CSV)) {
+  const raw = readFileSync(GITHUB_DATA_CSV, 'utf-8')
+  const { data } = Papa.parse(raw, { header: true, skipEmptyLines: true })
+  for (const row of data) {
+    if (row.url) {
+      commitMap.set(row.url.trim(), {
+        last_commit: row.last_commit?.trim() || null,
+        stars: row.stars?.trim() ? parseInt(row.stars.trim(), 10) : null,
+      })
     }
   }
-  console.log(`Loaded ${commitMap.size} commit times`)
+  console.log(`Loaded ${commitMap.size} github data entries`)
 } else {
-  console.warn(`WARN: ${COMMITS_CSV} not found — last_commit will be null for all projects`)
+  console.warn(`WARN: github_data.csv not found — last_commit and stars will be null`)
 }
 
 // --- Merge ---
@@ -48,6 +51,7 @@ const merged = projects.map(row => {
   const language = gtIdx !== -1 ? rawSection.slice(0, gtIdx).trim() : ''
   const section  = gtIdx !== -1 ? rawSection.slice(gtIdx + 3).trim() : rawSection
 
+  const ghData = commitMap.get(row.url?.trim())
   return {
     project:     row.project?.trim() ?? '',
     language:    language,
@@ -56,7 +60,8 @@ const merged = projects.map(row => {
     description: row.description?.trim() ?? '',
     github:      row.github?.trim() === 'True',
     cran:        row.cran?.trim() === 'True',
-    last_commit: commitMap.get(row.url?.trim()) ?? null,
+    last_commit: ghData?.last_commit ?? null,
+    stars:       ghData?.stars ?? null,
   }
 })
 

@@ -7,4 +7,5 @@ export interface Project {
   github: boolean
   cran: boolean
   last_commit: string | null
+  stars: number | null
 }

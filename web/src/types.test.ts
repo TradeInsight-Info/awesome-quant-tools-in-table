@@ -12,6 +12,7 @@ describe('Project type', () => {
       github: false,
       cran: false,
       last_commit: null,
+      stars: null,
     }
     expect(p.last_commit).toBeNull()
     expect(p.github).toBe(false)
@@ -27,6 +28,7 @@ describe('Project type', () => {
       github: true,
       cran: false,
       last_commit: '2025-12-30',
+      stars: null,
     }
     expect(p.last_commit).toBe('2025-12-30')
     expect(p.github).toBe(true)
