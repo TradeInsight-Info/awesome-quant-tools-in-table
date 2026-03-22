@@ -342,11 +342,13 @@ body {
   border: 1px solid var(--border-default);
   border-radius: 8px;
   background: var(--bg-surface);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
   width: 100%;
+  min-width: 660px;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -597,3 +599,41 @@ body {
   color: var(--text-dim);
 }
 .footer-dot { color: var(--border-default); }
+
+/* ─── Mobile Responsive ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 0 16px 60px;
+  }
+
+  /* Header: stack left block above action row */
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 0 20px;
+  }
+
+  .header-right {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Search fills full width on mobile */
+  .search-input {
+    width: 100% !important;
+  }
+
+  /* Filter bar stacks vertically */
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .section-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
