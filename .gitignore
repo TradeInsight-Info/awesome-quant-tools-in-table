@@ -9,3 +9,4 @@ build.sh
 web/node_modules/
 web/dist/
 web/public/projects.json
+.DS_Store
