@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/build-data.mjs",
+    "predev": "node ../scripts/build-data.mjs",
+    "prefetchgh": "node --env-file=../.env  ../scripts/fetch_github_data.mjs",
+    "prebuild": "node ../scripts/build-data.mjs && node ../scripts/update-readme.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

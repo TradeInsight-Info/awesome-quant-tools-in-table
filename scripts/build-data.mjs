@@ -1,30 +1,58 @@
+#!/usr/bin/env node
+/**
+ * Merges projects.csv + github_data.csv into public/projects.json for the web app.
+ * Run via: node scripts/build-data.mjs (from repo root or web/ directory)
+ */
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
-import Papa from 'papaparse'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-/**
- * Resolve a path relative to this script file (not the process CWD).
- * Required because the workflow runs: node web/scripts/build-data.mjs from repo root.
- */
+/** Resolve a path relative to this script file (not process CWD). */
 function rel(...parts) {
   return resolve(__dirname, ...parts)
 }
 
-const PROJECTS_CSV    = rel('../../data/projects.csv')
-const GITHUB_DATA_CSV = rel('../../data/github_data.csv')
-const NOT_FOUND_CSV   = rel('../../data/404.csv')
-const OUTPUT_JSON     = rel('../public/projects.json')
+const PROJECTS_CSV    = rel('../data/projects.csv')
+const GITHUB_DATA_CSV = rel('../data/github_data.csv')
+const NOT_FOUND_CSV   = rel('../data/404.csv')
+const OUTPUT_JSON     = rel('../web/public/projects.json')
+
+// Hand-rolled CSV field parser — handles quoted fields with embedded commas/newlines
+function parseCSVLine(line) {
+  const fields = []
+  let i = 0, inQuote = false, field = ''
+  while (i <= line.length) {
+    const ch = line[i]
+    if (ch === '"') {
+      inQuote = !inQuote
+    } else if ((ch === ',' || i === line.length) && !inQuote) {
+      fields.push(field)
+      field = ''
+    } else {
+      field += (ch ?? '')
+    }
+    i++
+  }
+  return fields
+}
+
+function parseCSV(raw) {
+  const lines = raw.trim().split('\n')
+  const headers = parseCSVLine(lines[0]).map(h => h.trim())
+  return lines.slice(1).filter(l => l.trim()).map(line => {
+    const fields = parseCSVLine(line)
+    const row = {}
+    for (let i = 0; i < headers.length; i++) {
+      row[headers[i]] = fields[i]?.trim() ?? ''
+    }
+    return row
+  })
+}
 
 // --- Parse projects.csv ---
-const projectsRaw = readFileSync(PROJECTS_CSV, 'utf-8')
-const { data: projects, errors: pErrors } = Papa.parse(projectsRaw, { header: true, skipEmptyLines: true })
-if (pErrors.length) {
-  console.error('projects.csv parse errors:', pErrors)
-  process.exit(1)
-}
+const projects = parseCSV(readFileSync(PROJECTS_CSV, 'utf-8'))
 
 // --- Load 404 blocklist (optional) ---
 let notFoundUrls = new Set()
@@ -39,10 +67,9 @@ if (existsSync(NOT_FOUND_CSV)) {
 }
 
 // --- Parse github_data.csv (optional) ---
-let commitMap = new Map()   // url -> { last_commit, stars }
+let commitMap = new Map()
 if (existsSync(GITHUB_DATA_CSV)) {
-  const raw = readFileSync(GITHUB_DATA_CSV, 'utf-8')
-  const { data } = Papa.parse(raw, { header: true, skipEmptyLines: true })
+  const data = parseCSV(readFileSync(GITHUB_DATA_CSV, 'utf-8'))
   for (const row of data) {
     if (row.url) {
       commitMap.set(row.url.trim(), {
@@ -53,7 +80,7 @@ if (existsSync(GITHUB_DATA_CSV)) {
   }
   console.log(`Loaded ${commitMap.size} github data entries`)
 } else {
-  console.warn(`WARN: github_data.csv not found — last_commit and stars will be null`)
+  console.warn('WARN: github_data.csv not found — last_commit and stars will be null')
 }
 
 const KNOWN_LANGUAGES = new Set([
@@ -64,7 +91,6 @@ const KNOWN_LANGUAGES = new Set([
 
 // --- Merge (exclude 404 projects) ---
 const merged = projects.filter(row => !notFoundUrls.has(row.url?.trim())).map(row => {
-  // Split section "Python > Numerical Libraries" into language + category
   const rawSection = row.section?.trim() ?? ''
   const gtIdx = rawSection.indexOf(' > ')
   let language = ''
@@ -86,8 +112,8 @@ const merged = projects.filter(row => !notFoundUrls.has(row.url?.trim())).map(ro
   const ghData = commitMap.get(row.url?.trim())
   return {
     project:     row.project?.trim() ?? '',
-    language:    language,
-    category:    category,
+    language,
+    category,
     url:         row.url?.trim() ?? '',
     description: row.description?.trim() ?? '',
     github:      row.github?.trim().startsWith('https://github.com/') ? row.github.trim() : null,
